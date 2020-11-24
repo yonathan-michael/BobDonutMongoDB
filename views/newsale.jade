@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  h3= title
+  form#form_add_sale(name="addsale", method="post", action="/addsale")
+    span Date
+    span &nbsp;
+    input#input_name(type="text", placeholder="00/00/0000", name="date")
+    br
+    br
+    span Quantity
+    span &nbsp;
+    input#input_street(type="number", placeholder="Enter Integer", name="quantity")
+    br
+    br
+    span Donut
+    span &nbsp;
+    input#input_city(type="text", placeholder="donut name", name="donut")
+    br
+    br
+    span Location ID
+    span &nbsp;
+    input#input_state(type="number", placeholder="1,2,3,4 or 5", name="location")
+    br
+    br
+    button#submit_student(type="submit") submit

@@ -1,0 +1,13 @@
+extends layout
+
+block content
+	h2.
+		Sales
+	ul
+		each sale, i in saleslist			
+			li#sale_list_item			
+				h5 ID: #{sale._id} Date: #{sale.saleDate} Quantity: #{sale.quantity} Location ID: #{sale.location}
+				
+
+				
+

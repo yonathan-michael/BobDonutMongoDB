@@ -1,0 +1,40 @@
+Queries (paste into terminal)
+
+1. How many donuts were sold?
+
+db.sales.aggregate([{ $group: { _id: null, TotalDonutsSold: { $sum: "$quantity" }}}])
+
+2. How much did each type of donut sale?
+
+db.sales.aggregate([{ $group: {
+  _id: "$donut.name",
+  TotalSold: {
+    $sum: "$quantity"
+  }
+}}])
+
+3. How many donuts were sold at each location?
+
+db.sales.aggregate([{ $group: {
+  _id: "$location",
+  TotalSold: {
+    $sum: "$quantity"
+  }
+}}])
+
+4. How many people bought a dozen donuts?
+
+db.sales.aggregate([{$match: {
+  quantity: 12
+}}, {$count: 'Dozens_Sold'}])
+
+5. What is our most popular donut on Halloween Eve? (10/30/2020)
+
+db.sales.aggregate([{$match: {
+  saleDate:"10/30/2020"
+}}, {$group: {
+  _id: "$donut.name",
+  TotalSold: {
+    $sum: "$quantity"
+  }
+}}])

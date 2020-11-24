@@ -1,0 +1,40 @@
+Two Collections
+
+Sales
+
+* Designed to allow user to insert simple, yet encompassing information about the sale they made.
+* Designed to make sure the document is not too big. 
+* Theoretically, 100's of sales will be made everyday so it is key to make sure these documents are short and succinct. No growing arrays. 
+* Embedded donut information so user can access name and price of donut. 
+
+{
+
+"_id": { "$oid": "5fbc468fd1ddd6245aededad"},
+
+"saleDate": "10/20/2020",
+
+"quantity": 2,
+
+"donut":[ {"id":3, "name":"Custard", "price":3.19}],
+
+"location":5 
+
+}
+
+
+
+
+Locations
+
+* Embedded donuts information and employees information
+* This allows user to see which donuts and which employeers are at one of the locations at all times.b
+
+{
+
+"_id": { "$oid": "5fbb6af54f2f15441d0e8a1e"},
+
+"address": "9 Union Court",
+
+"donuts": [{"id":9,"name":"Maple","price":4.84},{"id":10,"name":"Strawberry","price":3.86},{"id":1,"name":"Lemon Cream","price":4.63},{"id":5,"name":"Custard","price":3.19}],
+
+"employees":[{"id":10,"LastName":"Dunmuir"},{"id":22,"LastName":"Maddrah"},{"id":3,"LastName":"Maypes"},{"id":24,"LastName":"Jefferson"}]}

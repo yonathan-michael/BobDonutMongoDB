@@ -1,0 +1,8 @@
+To restore:
+
+Paste in Terminal
+
+mongorestore --db=bobDonuts2 --dir=/Users/yonnie/bobDonutMongo/bobDonutsDump
+
+replace directory argument with the path on your computer to the folder in this project
+that is named "bobDonutsDump"

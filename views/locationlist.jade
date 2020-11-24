@@ -1,0 +1,21 @@
+extends layout
+
+block content
+	h2.
+		Locations
+	ul
+		each location, i in locationlist			
+			li#location_list_item			
+				h3 #{location.address}
+				h4 Available Donuts:
+				ul
+					each donut, i in location.donuts
+						h5 #{donut.name}
+				h4 Employees:
+				ul
+					each employee, i in location.employees
+						h5 #{employee.LastName}
+					| <br>
+
+				
+
