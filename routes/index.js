@@ -1,21 +1,21 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
-const { MongoClient } = require('mongodb');
+const { MongoClient } = require("mongodb");
 
 const uri = process.env.MONGO_URL || "mongodb://localhost:27017";
 
 const client = new MongoClient(uri, { useUnifiedTopology: true });
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Bobs Donuts by Yonathan Michael' });
+router.get("/", function (req, res, next) {
+	res.render("index", { title: "Bobs Donuts by Yonathan Michael" });
 });
 
 /* Locations page. This fulfills the business requirement
 of being able to see which donuts are available at each location
 and which employees work at each location   */
-router.get('/locations', function(req, res) {
+router.get("/locations", function (req, res) {
 	try {
 		console.log("Connecting...");
 
@@ -23,7 +23,7 @@ router.get('/locations', function(req, res) {
 
 		console.log("Connected");
 
-		const db = client.db("bobDonuts");
+		const db = client.db("bobdonuts");
 
 		const locationCollection = db.collection("locations");
 
@@ -33,11 +33,11 @@ router.get('/locations', function(req, res) {
 			if (err) {
 				res.send(err);
 			} else if (result.length) {
-				res.render('locationlist', {
-					"locationlist" : result
+				res.render("locationlist", {
+					locationlist: result,
 				});
 			} else {
-				res.send('No documents found');
+				res.send("No documents found");
 			}
 		});
 	} finally {
@@ -45,7 +45,7 @@ router.get('/locations', function(req, res) {
 });
 
 /* This is to look at sales log */
-router.get('/sales', function(req, res) {
+router.get("/sales", function (req, res) {
 	try {
 		console.log("Connecting...");
 
@@ -53,7 +53,7 @@ router.get('/sales', function(req, res) {
 
 		console.log("Connected");
 
-		const db = client.db("bobDonuts");
+		const db = client.db("bobdonuts");
 
 		const salesCollection = db.collection("sales");
 
@@ -63,45 +63,47 @@ router.get('/sales', function(req, res) {
 			if (err) {
 				res.send(err);
 			} else if (result.length) {
-				res.render('saleslist', {
-					"saleslist" : result.reverse()
+				res.render("saleslist", {
+					saleslist: result.reverse(),
 				});
 			} else {
-				res.send('No documents found');
+				res.send("No documents found");
 			}
 		});
 	} finally {
 	}
 });
 
-router.get('/newsale', function(req, res){
-    res.render('newsale', {title: 'Add Sale' });
+router.get("/newsale", function (req, res) {
+	res.render("newsale", { title: "Add Sale" });
 });
 
-router.post('/addsale', function(req, res) {
+router.post("/addsale", function (req, res) {
+	console.log("Connecting...");
 
-		console.log("Connecting...");
+	client.connect();
 
-		client.connect();
+	console.log("Connected");
 
-		console.log("Connected");
+	const db = client.db("bobdonuts");
 
-		const db = client.db("bobDonuts");
+	const salesCollection = db.collection("sales");
 
-		const salesCollection = db.collection("sales");
+	const salequery = {
+		saleDate: req.body.date,
+		quantity: req.body.quantity,
+		donut: req.body.donut,
+		location: req.body.location,
+	};
 
-		const salequery = {saleDate: req.body.date, quantity: req.body.quantity,
-          donut: req.body.donut, location: req.body.location};
-
-		salesCollection.insertOne(salequery, function (err, result){
-          if (err) {
-            console.log(err);
-          } else {
- 
-            // Redirect to the updated sales list
-            res.redirect("sales");
-          }
-		});
+	salesCollection.insertOne(salequery, function (err, result) {
+		if (err) {
+			console.log(err);
+		} else {
+			// Redirect to the updated sales list
+			res.redirect("sales");
+		}
 	});
-	
+});
+
 module.exports = router;
